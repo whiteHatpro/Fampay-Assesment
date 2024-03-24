@@ -1,12 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const diContainer = require('./dependency-injection'); // dependency injection
-const routes = require('./api/router.js');
-const appConfig = require('./config');
+const container = require('./di'); // dependency injection
+const router = require('./api/router.js');
+const config = require('./config');
 
-const server = express();
 
-server.use(
+const app = express();
+
+app.use(
     bodyParser.json({
         limit: '10mb',
         strict: false
@@ -14,16 +15,16 @@ server.use(
 );
 
 // inject dependencies
-server.use((req, res, next) => {
-    req.diContainer = diContainer.createScope();
+app.use((req, res, next) => {
+    req.container = container.createScope();
     next();
 });
 
 // register routes
-server.use('/video-service', routes);
+app.use('/video-service', router);
 
 // start server
-const portNumber = appConfig.app.port;
-server.listen(portNumber, () => {
-    console.log(`Server is running on port ${portNumber}`);
+const port = config.app.port;
+app.listen(port, () => {
+    console.log(`Server listening on port ${port}`);
 });

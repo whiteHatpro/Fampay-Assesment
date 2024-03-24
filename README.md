@@ -1,20 +1,9 @@
 # Project Design Overview
 
-## Architecture Layers
 
-- **Layer 1: API layer**
-- **Layer 2: Logic Layer**
-- **Layer 3: Repository Layer**
-
-**Flow:**
-- API Layer validates requests and calls Logic Layer.
-- Logic Layer calls Repository Layer, filtering responses.
-- Repository Layer communicates with external services/databases.
-
-i.e., API Layer -> Logic Layer -> Repository Layer
-
-**Dependency Injection:**
-- Dependencies managed in "dependency-injection/index.js".
+##Flow
+- API Layer -> Logic Layer -> Repository Layer
+- Dependencies managed in "di/index.js".
 
 ## Cron Job
 
@@ -25,15 +14,16 @@ i.e., API Layer -> Logic Layer -> Repository Layer
 - Lower consistency (Eventual Consistency) is acceptable for slight delays in showing the latest videos.
 - Easily scalable using sharding compared to SQL.
 
-## MongoDB Indexing
+## Text Searching (Bonus Included)
 
-- `title_text_description_text`: Index on title and description for text searching.
-- `publishTime_-1`: Descending index on publishedTime for efficient retrieval.
+- Returns videos if title or description is matched using MongoDB text search operator.
+- Bonus: Partial matches returned by checking if individual words are present in the title/description as substrings.
+- Elastic search can be used to make the searching better in large scale projects
 
 ## API Fallback Key (Bonus Included)
 
 - Retries with a new API key if quota is exceeded.
-- Implemented in "repository/services/youtube-service.js" with console.log helpers.
+- Implemented in "repository/YouTubeServices/youtube-YouTubeService.js" with console.log helpers.
 
 **Steps to Run Without Docker**
 
@@ -49,7 +39,14 @@ i.e., API Layer -> Logic Layer -> Repository Layer
 *Description*: Get all videos in descending order of publised time having query as `limit` and `offset`. `limit` can take `15` as the max limit
 
 ```
-curl --location 'localhost:3000/video-service/videos?limit=15&offset=0'
+curl --location 'localhost:3000/video-YouTubeService/videos?limit=15&offset=0'
 ```
+
+## API: GET /search (Bonus Included)
+
+*Description:* Search using query `q`
+
+```
+curl --location 'localhost:3000/video-service/videos/search?q=tech'
 
 

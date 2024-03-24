@@ -1,31 +1,31 @@
 /**
- * VideoHandler: Responsible for managing video requests.
+ * Represents a class for handling video requests.
  */
-class VideoHandler {
-    constructor(logic, settings) {
-        this.logic = logic;
-        this.settings = settings;
+class GetVideos {
+    constructor(getVideosLogic, constants) {
+        this.getVideosLogic = getVideosLogic;
+        this.constants = constants;
     }
 
     /**
-     * Handles incoming video requests.
+     * Handles the incoming video request.
      */
-    async handle(req, res) {
+    async handleRequest(req, res) {
         try {
-            const data = this.validate(req);
-            if (!data) {
-                // Log invalid request
+            const validInput = this.validateRequest(req);
+            if (!validInput) {
+                // can log message
                 return res.status(400).send({
                     message: 'Invalid request'
                 });
             }
 
-            const videos = await this.logic.fetch(data);
+            const videos = await this.getVideosLogic.getVideos(validInput);
             return res.status(200).send({
                 videos
             });
         } catch (error) {
-            console.error('Error:', error); // Log internal server error
+            console.log(error); // can log message
             return res.status(500).send({
                 message: 'Internal server error'
             });
@@ -33,15 +33,17 @@ class VideoHandler {
     }
 
     /**
-     * Validates request parameters.
+     * Validates the request parameters.
+     * @param {Object} req - The request object.
+     * @returns {Object|boolean} - The valid request parameters or false if invalid.
      */
-    validate(req) {
+    validateRequest(req) {
         const query = req.query;
         const { limit, offset } = query;
         if (!limit || !offset) {
             return false;
         }
-        if (limit > this.settings.maxVideos) {
+        if (limit > this.constants.getVideosAPIConfig.maxLimit) {
             return false;
         }
         return {
@@ -51,4 +53,4 @@ class VideoHandler {
     }
 }
 
-module.exports = VideoHandler;
+module.exports = GetVideos
