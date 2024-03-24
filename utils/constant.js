@@ -1,6 +1,6 @@
 module.exports = {
     getVideosAPIConfig: {
-        maxLimit: 10,
+        maxLimit: 15,
     },
     fetchVideosJobConfig: {
         maxVideosToFetch: 5,
