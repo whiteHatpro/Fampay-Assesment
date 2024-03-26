@@ -3,7 +3,6 @@ const qs = require('qs');
 
 /**
  * Represents a YouTube service.
- * @class
  */
 class YoutubeService {
     constructor(model, config, constants) {
