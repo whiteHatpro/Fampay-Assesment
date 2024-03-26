@@ -14,13 +14,6 @@ class YoutubeService {
 
     /**
      * Retrieves videos from YouTube based on the provided parameters.
-     * @param {string} q - The search query.
-     * @param {number} limit - The maximum number of videos to retrieve.
-     * @param {string} publishedAfter - The date and time (in ISO 8601 format) after which the videos were published.
-     * @param {string} apiKey - The API key to access the YouTube API.
-     * @param {boolean} isFallBackAPIKey - Indicates whether the fallback API key is being used.
-     * @returns {Promise<object>} - A promise that resolves to the retrieved videos.
-     * @throws {Error} - If an error occurs while retrieving the videos.
      */
     async getVideos(q, limit, publishedAfter, apiKey, isFallBackAPIKey) {
         try {

@@ -4,7 +4,6 @@
 class SearchVideosLogic {
     /**
      * Creates an instance of SearchVideosLogic.
-     * @param {VideoRepository} videoRepo - The video repository.
      */
     constructor(videoRepo) {
         this.videoRepo = videoRepo;

@@ -33,7 +33,18 @@
 4. Run `node jobs/fetch-videos/index.js` (Cron job for YouTube videos).
 5. Use provided CURL commands.
 
-# CURL
+**Steps to Run With Docker**
+
+1. `docker build -t video-service -f deployment/Dockerfile .`
+2. `docker build -t job-fetch-videos -f jobs/fetch-videos/deployment/Dockerfile .`
+3. `docker images` (verify images).
+4. `docker run -p 3000:3000 -d video-service` (API server on port 3000).
+5. `docker run -d job-fetch-videos` (Cron job for YouTube videos).
+6. `docker ps` (get container IDs).
+7. `docker logs <containerId> -f` (check logs).
+8. Use provided CURL commands.
+
+# CURLs
 
 ## API: GET /
 *Description*: Get all videos in descending order of publised time having query as `limit` and `offset`. `limit` can take `15` as the max limit

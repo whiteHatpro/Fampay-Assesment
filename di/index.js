@@ -13,9 +13,11 @@ const { constants } = require('../utils');
 
 //APIs
 const GetVideosAPI = require('../api/videos/get');
+const SearchVideosAPI = require('../api/videos/search');
 
 //Logic 
 const GetVideosLogic = require('../logic/videos/get-logic');
+const SearchVideosLogic = require('../logic/videos/search-logic');
 
 //Repos
 const VideoRepo = require('../repository/data/repo/video-repo');
@@ -35,12 +37,14 @@ const getScope = () => {
 
 // Register APIs
 container.register({
-    getVideosAPI: asClass(GetVideosAPI, getScope())
+    getVideosAPI: asClass(GetVideosAPI, getScope()),
+	searchVideosAPI: asClass(SearchVideosAPI, getScope())
 });
 
 // Register Logic
 container.register({
-    getVideosLogic: asClass(GetVideosLogic, getScope())
+    getVideosLogic: asClass(GetVideosLogic, getScope()),
+	searchVideosLogic: asClass(SearchVideosLogic, getScope())
 });
 
 // Register Repos
